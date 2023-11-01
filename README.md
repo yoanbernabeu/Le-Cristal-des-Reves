@@ -24,7 +24,7 @@ Le jeu se joue en coopération, de 2 à 6 joueur·euse·s. Chaque joueur·euse p
 
 ## Installation
 
-Aucune installation n'est nécessaire pour jouer au Cristal des Rêves, mais vous aurez besoin d'imprimer certains composants du jeu. Vous pouvez trouver les fichiers imprimables dans le dossier [printables](printables/).
+Aucune installation n'est nécessaire pour jouer au Cristal des Rêves, mais vous aurez besoin d'imprimer certains composants du jeu. Vous pouvez trouver les fichiers imprimables dans le dossier [printables](printables/index.md).
 
 ## Contribuer
 
