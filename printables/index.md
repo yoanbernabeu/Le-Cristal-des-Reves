@@ -14,7 +14,6 @@ Bienvenue dans le dossier des ressources imprimables pour "Le Cristal des Rêves
 
 - [Plateau.pdf](./Plateau.pdf) : Le plateau de jeu.
 - [Cartes.pdf](./Cartes.pdf) : Les 100 cartes "Vision de Rêve".
-- [Fragments.pdf](./Fragments.pdf) : Les 20 fragments du Cristal des Rêves.
-- [Pions.pdf](./Pions.pdf) : Les pions des joueurs.
+- [Pions_Fragments.pdf](./Pions_Fragments.pdf) : Les 20 fragments du Cristal des Rêves et les pions des joueurs.
 
 Nous vous souhaitons de merveilleuses aventures dans le monde du Cristal des Rêves ! Amusez-vous bien !
