@@ -21,7 +21,7 @@ Le but du jeu est de collaborer en tant que Gardien·ne·s des Rêves pour retro
 - 1 Plateau de jeu
 - 6 Pions de joueur·euse·s (de couleurs différentes)
 - 1 Dé à six faces
-- 100 Cartes "Vision de Rêve"
+- 45 Cartes "Vision de Rêve"
 - 20 Fragments du Cristal des Rêves
 - 1 Sablier (facultatif)
 

@@ -6,7 +6,7 @@ processed_dir="${temp_dir}/processed_images"
 mkdir -p "${processed_dir}"
 
 # Copie des images originales vers le répertoire temporaire
-cp ./_sources/carte_*.png "${processed_dir}"
+cp ./_compress/carte_*.jpg "${processed_dir}"
 
 # Génération du fichier LaTeX
 tex_file="${temp_dir}/images.tex"
@@ -24,7 +24,7 @@ cat <<EOF > "$tex_file"
 \newcounter{imagecounter}
 
 \foreach \x in {01,02,03,04,05,06,07,08,09,10,...,99} { % Assurez-vous que cela couvre la plage de vos images
-  \def\filename{carte_\x.png}%
+  \def\filename{carte_\x.jpg}%
   \IfFileExists{${processed_dir}/\filename}{%
     \includegraphics[width=60mm]{${processed_dir}/\filename}%
     \stepcounter{imagecounter}%
