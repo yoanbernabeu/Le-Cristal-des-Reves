@@ -40,6 +40,8 @@ Les Gardien·ne·s des Rêves n'ont qu'un temps limité pour restaurer le Crista
 
 ### Paramètres de la Partie
 
+Pour vous aider à choisir la durée de votre partie, voici quelques suggestions :
+
 - **Partie Éclair :** 20 minutes, 8 fragments
 - **Partie Rapide :** 30 minutes, 10 fragments
 - **Partie Standard :** 45 minutes, 12 fragments
@@ -55,7 +57,7 @@ Le temps est un facteur crucial dans votre quête, et une fois épuisé, la part
 
 - Si les joueur·euse·s parviennent à récupérer tous les fragments et à atteindre le centre du plateau avant la fin du temps imparti, ils/elles remportent la victoire et sauvent le monde des rêves.
 - Si le temps s'épuise avant que la mission ne soit complétée, les Ténèbres du Cauchemar triomphent et la partie est perdue.
-- Vous pouvez rendre le jeu plus simple en accordant 1 minute supplémentaire pour chaque fragment du Cristal des Rêves récupéré en cours de partie.
+- *Option : Vous pouvez rendre le jeu plus simple en accordant 1 minute supplémentaire pour chaque fragment du Cristal des Rêves récupéré en cours de partie.*
 
 ### Déroulement d'un Tour de Jeu
 
@@ -70,20 +72,18 @@ Chaque tour est une opportunité de progresser dans votre quête pour rassembler
    - **Case Cristal des Rêves :**
      1. **Assumer le Rôle du Guide des Rêves :**
         - Le joueur ou la joueuse en question devient le/la Guide des Rêves pour ce tour.
-     2. **Choisir un Mot-Clé :**
-        - Le/la Guide sélectionne un mot en relation avec l'univers onirique du jeu et le partage avec les autres participant·e·s.
-     3. **Organiser la Ronde de Vision :**
-         - Le/la Guide sélectionne une carte qui illustre le mieux le mot-clé et la place face cachée devant lui/elle.
+     2. **Organiser la Ronde de Vision :**
+         - Le/la Guide sélectionne une carte et la décrit aux autres joueur·euse·s sans la montrer avec un (1) seul mot et la place face cachée devant lui/elle.
          - Les autres joueur·euse·s choisissent deux cartes chacun·e, au hasard et sans les regarder et les placent face cachée devant eux/elles.
-     4. **Révélation des Cartes :**
+     1. **Révélation des Cartes :**
         - Mélangez toutes les cartes choisies et exposez-les au centre de la table.
-     5. **Discussion et Délibération :**
+     2. **Discussion et Délibération :**
         - Tous les joueur·euse·s, à l'exception du/de la Guide, discutent ensemble pour tenter de déterminer quelle carte a été sélectionnée par le/la Guide.
-     6. **Récupération du Fragment (ou non) :**
-        - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré (optionnel : un accorde une minute supplémentaire au chrono)
+     3. **Récupération du Fragment (ou non) :**
+        - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré **(optionnel : on accorde une minute supplémentaire au chrono)**
         - Dans le cas contraire, le fragment reste en place, attendant d'être récupéré lors d'un tour ultérieur.
 
-3. **Fin du Tour :**
+1. **Fin du Tour :**
    - Piochez des cartes de la pioche jusqu'à ce que vous ayez de nouveau six cartes en main, et passez vos cartes au joueur ou à la joueuse à votre gauche, face cachée.
 
 > Ces étapes sont conçues pour assurer que chaque tour de jeu est à la fois stratégique et engageant, offrant une expérience immersive et collaborative à tous les joueur·euse·s.
