@@ -1,8 +1,8 @@
 # Le Cristal des Rêves
 
-Le Cristal des Rêves est un jeu de société coopératif et créatif qui invite les joueur·euse·s à plonger dans un univers onirique, afin de retrouver les fragments d’un cristal mystique et de sauver le monde des songes. Ce projet est Open Source et disponible pour toutes et tous, que vous souhaitiez contribuer, jouer, ou simplement explorer le monde du Cristal des Rêves.
+![Le Cristal des Rêves](./assets/cover.jpg)
 
-![Le Cristal des Rêves](./illustration.png)
+Le Cristal des Rêves est un jeu de société coopératif et créatif qui invite les joueur·euse·s à plonger dans un univers onirique, afin de retrouver les fragments d’un cristal mystique et de sauver le monde des songes. Ce projet est Open Source et disponible pour toutes et tous, que vous souhaitiez contribuer, jouer, ou simplement explorer le monde du Cristal des Rêves.
 
 ## Table des Matières
 
