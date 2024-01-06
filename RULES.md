@@ -29,9 +29,10 @@ Le but du jeu est de collaborer en tant que Gardien·ne·s des Rêves pour retro
 
 1. Installez le plateau au centre de la table.
 2. Chaque joueur·euse choisit un pion et le place sur une case de départ.
-3. Mélangez les cartes "Vision de Rêve" et distribuez-en six à chaque joueur·euse, face cachée.
-4. Disposez les fragments du Cristal des Rêves sur les cases prévues à cet effet sur le plateau.
-5. Désignez le premier joueur·euse.
+3. Les joueur·euse·s se peuvent prendre quelques instants pour se familiariser avec les cartes "Vision de Rêve".
+4. Mélangez les cartes "Vision de Rêve" et distribuez-en six à chaque joueur·euse, face cachée.
+5. Disposez les fragments du Cristal des Rêves sur les cases prévues à cet effet sur le plateau.
+6. Désignez le premier joueur·euse.
 
 ## Durée de la Partie et Défi Temporel
 
@@ -48,10 +49,13 @@ Placez le nombre choisi de fragments du Cristal des Rêves sur le plateau avant 
 
 ### Règle Spéciale : Le Sablier des Rêves
 
-Si vous avez un sablier, vous pouvez l'utiliser comme minuteur. Sinon, tout autre type de minuteur fera l'affaire. Le temps est un facteur crucial dans votre quête, et une fois épuisé, la partie se termine immédiatement.
+Nous vous conseillons d'utiliser un smaartphone ou tout autre minuteur (idéalement vous permettant d'ajouter du temps en cours de partie) pour chronométrer votre partie.
+
+Le temps est un facteur crucial dans votre quête, et une fois épuisé, la partie se termine immédiatement.
 
 - Si les joueur·euse·s parviennent à récupérer tous les fragments et à atteindre le centre du plateau avant la fin du temps imparti, ils/elles remportent la victoire et sauvent le monde des rêves.
 - Si le temps s'épuise avant que la mission ne soit complétée, les Ténèbres du Cauchemar triomphent et la partie est perdue.
+- Vous pouvez rendre le jeu plus simple en accordant 1 minute supplémentaire pour chaque fragment du Cristal des Rêves récupéré en cours de partie.
 
 ### Déroulement d'un Tour de Jeu
 
@@ -69,18 +73,14 @@ Chaque tour est une opportunité de progresser dans votre quête pour rassembler
      2. **Choisir un Mot-Clé :**
         - Le/la Guide sélectionne un mot en relation avec l'univers onirique du jeu et le partage avec les autres participant·e·s.
      3. **Organiser la Ronde de Vision :**
-        - **Pour 2-3 joueur·euse·s :** 
-          - Le/la Guide sélectionne une carte qui illustre le mieux le mot-clé.
-          - Les autres joueur·euse·s choisissent deux cartes chacun·e qui, selon eux/elles, sont les moins liées au mot-clé.
-        - **Pour 4-6 joueur·euse·s :**
-          - Le/la Guide sélectionne une carte qui illustre le mieux le mot-clé. 
-          - Chaque joueur·euse choisit une carte qu'il/elle pense être la moins associée au mot-clé.
+         - Le/la Guide sélectionne une carte qui illustre le mieux le mot-clé et la place face cachée devant lui/elle.
+         - Les autres joueur·euse·s choisissent deux cartes chacun·e, au hasard et sans les regarder et les placent face cachée devant eux/elles.
      4. **Révélation des Cartes :**
         - Mélangez toutes les cartes choisies et exposez-les au centre de la table.
      5. **Discussion et Délibération :**
         - Tous les joueur·euse·s, à l'exception du/de la Guide, discutent ensemble pour tenter de déterminer quelle carte a été sélectionnée par le/la Guide.
      6. **Récupération du Fragment (ou non) :**
-        - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré.
+        - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré (optionnel : un accorde une minute supplémentaire au chrono)
         - Dans le cas contraire, le fragment reste en place, attendant d'être récupéré lors d'un tour ultérieur.
 
 3. **Fin du Tour :**
@@ -90,7 +90,9 @@ Chaque tour est une opportunité de progresser dans votre quête pour rassembler
 
 ## Fin de la Partie
 
-La partie se termine lorsque tous les fragments sont récupérés et que tous les joueur·euse·s ont atteint le centre du plateau. Les joueur·euse·s gagnent s'ils/elles y parviennent avant la fin du temps imparti.
+La partie se termine lorsque tous les fragments sont récupérés et que tous les joueur·euse·s traversent le centre du plateau (sans forcément s'arrêter dessus).
+
+Les joueur·euse·s gagnent s'ils/elles y parviennent avant la fin du temps imparti.
 
 ## Conclusion
 

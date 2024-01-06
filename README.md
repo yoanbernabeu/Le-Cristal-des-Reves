@@ -8,7 +8,7 @@ Le Cristal des Rêves est un jeu de société coopératif et créatif qui invite
   - [Table des Matières](#table-des-matières)
   - [Introduction](#introduction)
   - [Comment Jouer](#comment-jouer)
-  - [Installation](#installation)
+  - [Impression](#impression)
   - [Contribuer](#contribuer)
   - [Licence](#licence)
   - [Contact](#contact)
@@ -22,9 +22,9 @@ Les Gardien·ne·s des Rêves sont les dernier·ère·s espoir·s pour restaurer
 
 Le jeu se joue en coopération, de 2 à 6 joueur·euse·s. Chaque joueur·euse prend le rôle d'un·e Gardien·ne des Rêves, et ensemble, iels doivent retrouver les fragments du Cristal des Rêves à travers divers défis et énigmes. Pour les règles complètes et les instructions de jeu, veuillez consulter le fichier [RULES.md](RULES.md).
 
-## Installation
+## Impression
 
-Aucune installation n'est nécessaire pour jouer au Cristal des Rêves, mais vous aurez besoin d'imprimer certains composants du jeu. Vous pouvez trouver les fichiers imprimables dans le dossier [printables](printables/index.md).
+Vous aurez besoin d'imprimer certains composants du jeu. Vous pouvez trouver les fichiers imprimables dans le dossier [printables](printables/index.md).
 
 ## Contribuer
 
