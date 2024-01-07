@@ -80,8 +80,8 @@ Chaque tour est une opportunité de progresser dans votre quête pour rassembler
      2. **Discussion et Délibération :**
         - Tous les joueur·euse·s, à l'exception du/de la Guide, discutent ensemble pour tenter de déterminer quelle carte a été sélectionnée par le/la Guide.
      3. **Récupération du Fragment (ou non) :**
-        - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré **(optionnel : on accorde une minute supplémentaire au chrono)**
-        - Dans le cas contraire, le fragment reste en place, attendant d'être récupéré lors d'un tour ultérieur.
+        - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré *(optionnel : on accorde une minute supplémentaire au chrono)*
+        - Dans le cas contraire, le fragment reste en place, attendant d'être récupéré lors d'un tour ultérieur et un nouveau fragment est placé sur le plateau.
 
 1. **Fin du Tour :**
    - Piochez des cartes de la pioche jusqu'à ce que vous ayez de nouveau six cartes en main, et passez vos cartes au joueur ou à la joueuse à votre gauche, face cachée.
