@@ -38,6 +38,21 @@ cat <<EOF > "$tex_file"
   }{}
 }
 
+% Boucle pour ajouter 'carte_attaque.jpg' 15 fois
+\foreach \y in {1,...,15} {
+  \def\specialfilename{carte_attaque.jpg}%
+  \IfFileExists{${processed_dir}/\specialfilename}{
+    \includegraphics[width=60mm]{${processed_dir}/\specialfilename}%
+    \stepcounter{imagecounter}%
+    \ifnum\value{imagecounter}=9%
+        \clearpage
+        \setcounter{imagecounter}{0}%
+    \else
+        \vspace{10mm}
+    \fi
+  }{}
+}
+
 \end{document}
 EOF
 

@@ -22,6 +22,7 @@ Le but du jeu est de collaborer en tant que Gardien·ne·s des Rêves pour retro
 - 6 Pions de joueur·euse·s (de couleurs différentes)
 - 1 Dé à six faces
 - 45 Cartes "Vision de Rêve"
+- 15 Cartes "Attaque Cauchemardesque"
 - 20 Fragments du Cristal des Rêves
 - 1 Sablier (facultatif)
 
@@ -30,7 +31,7 @@ Le but du jeu est de collaborer en tant que Gardien·ne·s des Rêves pour retro
 1. Installez le plateau au centre de la table.
 2. Chaque joueur·euse choisit un pion et le place sur une case de départ.
 3. Les joueur·euse·s se peuvent prendre quelques instants pour se familiariser avec les cartes "Vision de Rêve".
-4. Mélangez les cartes "Vision de Rêve" et distribuez-en six à chaque joueur·euse, face cachée.
+4. Mélangez les cartes "Vision de Rêve" et "Attaque Cauchemardesque", puis distribuez-en six à chaque joueur·euse, face cachée.
 5. Disposez les fragments du Cristal des Rêves sur les cases prévues à cet effet sur le plateau.
 6. Désignez le premier joueur·euse.
 
@@ -73,17 +74,20 @@ Chaque tour est une opportunité de progresser dans votre quête pour rassembler
      1. **Assumer le Rôle du Guide des Rêves :**
         - Le joueur ou la joueuse en question devient le/la Guide des Rêves pour ce tour.
      2. **Organiser la Ronde de Vision :**
-         - Le/la Guide sélectionne une carte et la décrit aux autres joueur·euse·s sans la montrer avec un (1) seul mot et la place face cachée devant lui/elle.
+         - Le/la Guide sélectionne une carte "Vision de Rêve" et la décrit aux autres joueur·euse·s sans la montrer avec un (1) seul mot et la place face cachée devant lui/elle.
          - Les autres joueur·euse·s choisissent deux cartes chacun·e, au hasard et sans les regarder et les placent face cachée devant eux/elles.
-     1. **Révélation des Cartes :**
+     3. **Révélation des Cartes :**
         - Mélangez toutes les cartes choisies et exposez-les au centre de la table.
-     2. **Discussion et Délibération :**
+     4. **Attaque Cauchemardesque :**
+        - Si une ou plusieurs cartes "Attaque Cauchemardesque" sont révélées, autant de fragments du Cristal des Rêves sont ajoutés au plateau. La ronde de vision se termine immédiatement.
+        - Si aucune carte "Attaque Cauchemardesque" n'est révélée, la ronde de vision se poursuit.
+     5. **Discussion et Délibération :**
         - Tous les joueur·euse·s, à l'exception du/de la Guide, discutent ensemble pour tenter de déterminer quelle carte a été sélectionnée par le/la Guide.
-     3. **Récupération du Fragment (ou non) :**
+     6. **Récupération du Fragment (ou non) :**
         - Si le groupe parvient à identifier correctement la carte du/de la Guide, le fragment du Cristal des Rêves est récupéré *(optionnel : on accorde une minute supplémentaire au chrono)*
         - Dans le cas contraire, le fragment reste en place, attendant d'être récupéré lors d'un tour ultérieur et un nouveau fragment est placé sur le plateau.
 
-1. **Fin du Tour :**
+3. **Fin du Tour :**
    - Piochez des cartes de la pioche jusqu'à ce que vous ayez de nouveau six cartes en main, et passez vos cartes au joueur ou à la joueuse à votre gauche, face cachée.
 
 > Ces étapes sont conçues pour assurer que chaque tour de jeu est à la fois stratégique et engageant, offrant une expérience immersive et collaborative à tous les joueur·euse·s.
