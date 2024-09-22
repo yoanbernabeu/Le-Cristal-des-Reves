@@ -118,9 +118,23 @@
         const easierModeCheckbox = document.getElementById('easierMode');
         const endButton = document.getElementById('endButton');
 
-        startButton.addEventListener('click', startTimer);
-        addTimeButton.addEventListener('click', addOneMinute);
-        endButton.addEventListener('click', endGame);
+        startButton.addEventListener('click', () => {
+            // Initialiser le contexte audio lors du premier clic de l'utilisateur
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            startTimer();
+        });
+
+        endButton.addEventListener('click', () => {
+            // Vérifier si le contexte audio est initialisé avant de l'utiliser
+            if (audioContext) {
+                // Arrêter le contexte audio si nécessaire
+                audioContext.close();
+                audioContext = null;
+            }
+            endGame();
+        });
 
         function startTimer() {
             totalTime = parseInt(durationInput.value) * 60;
@@ -142,11 +156,6 @@
 
             remainingTime = totalTime;
             displayTime(remainingTime);
-
-            // Initialiser le contexte audio lors du premier clic de l'utilisateur
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
 
             loadAudioFiles().then(() => {
                 calculateSongSegments();
