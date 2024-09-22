@@ -98,6 +98,11 @@
         <div id="timerDisplay">45:00</div>
         <button id="addTimeButton">+1 Minute (Fragment Retrouvé)</button>
     </div>
+    <audio id="audio1" src="song01.mp3"></audio>
+    <audio id="audio2" src="song02.mp3"></audio>
+    <audio id="audio3" src="song03.mp3"></audio>
+    <audio id="audio4" src="song04.mp3"></audio>
+    <audio id="audio5" src="song05.mp3"></audio>
     <script>
         let countdown;
         let totalTime;
@@ -105,9 +110,13 @@
         let easierMode = false;
         let songSegments = [];
         let currentSongIndex = 0;
-        let audioContext;
-        let audioBuffers = [];
-        let audioSource;
+        const audioElements = [
+            document.getElementById('audio1'),
+            document.getElementById('audio2'),
+            document.getElementById('audio3'),
+            document.getElementById('audio4'),
+            document.getElementById('audio5')
+        ];
 
         const durationInput = document.getElementById('duration');
         const startButton = document.getElementById('startButton');
@@ -119,16 +128,6 @@
         startButton.addEventListener('click', startTimer);
         addTimeButton.addEventListener('click', addOneMinute);
         endButton.addEventListener('click', endGame);
-
-        async function loadAudioFiles() {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            for (let i = 1; i <= 5; i++) {
-                const response = await fetch(`song${('0' + i).slice(-2)}.mp3`);
-                const arrayBuffer = await response.arrayBuffer();
-                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-                audioBuffers.push(audioBuffer);
-            }
-        }
 
         function startTimer() {
             totalTime = parseInt(durationInput.value) * 60;
@@ -154,12 +153,9 @@
             // Diviser le temps total en 5 segments pour les chansons
             calculateSongSegments();
 
-            // Charger les fichiers audio
-            loadAudioFiles().then(() => {
-                // Démarrer la première chanson
-                currentSongIndex = 0;
-                playCurrentSong();
-            });
+            // Démarrer la première chanson
+            currentSongIndex = 0;
+            playCurrentSong();
 
             countdown = setInterval(() => {
                 remainingTime--;
@@ -214,21 +210,19 @@
         }
 
         function playCurrentSong() {
-            if (audioSource) {
-                audioSource.stop();
-            }
-            audioSource = audioContext.createBufferSource();
-            audioSource.buffer = audioBuffers[currentSongIndex];
-            audioSource.connect(audioContext.destination);
-            audioSource.loop = true;
-            audioSource.start();
+            stopAudio();
+            const audioElement = audioElements[currentSongIndex];
+            audioElement.loop = true;
+            audioElement.play().catch(error => {
+                console.error('Erreur lors de la lecture de la piste audio :', error);
+            });
         }
 
         function stopAudio() {
-            if (audioSource) {
-                audioSource.stop();
-                audioSource = null;
-            }
+            audioElements.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
         }
 
         function endGame() {
