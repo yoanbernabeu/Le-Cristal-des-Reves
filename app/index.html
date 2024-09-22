@@ -51,7 +51,7 @@
         .options input[type="checkbox"] {
             margin-right: 10px;
         }
-        #startButton, #addTimeButton, #endButton {
+        #startButton, #addTimeButton, #endButton, #playAudioButton {
             background-color: #0f3460;
             color: #eaeaea;
             border: none;
@@ -60,12 +60,22 @@
             margin-top: 20px;
             cursor: pointer;
             width: 100%;
+            transition: all 0.3s ease;
         }
-        #startButton:hover, #addTimeButton:hover, #endButton:hover {
+        #startButton:hover, #addTimeButton:hover, #endButton:hover, #playAudioButton:hover {
             background-color: #16213e;
         }
-        #addTimeButton, #endButton {
+        #addTimeButton, #endButton, #playAudioButton {
             display: none;
+        }
+        #playAudioButton {
+            background-color: transparent;
+            border: 2px solid #e94560;
+            color: #e94560;
+        }
+        #playAudioButton:hover {
+            background-color: #e94560;
+            color: #eaeaea;
         }
         #timerDisplay {
             font-size: 3em;
@@ -103,6 +113,14 @@
             width: 100%;
             height: 50px;
         }
+        #playAudioButton {
+            background-color: transparent;
+            border: 2px solid #e94560;
+            color: #e94560;
+            margin-top: 10px;
+            cursor: pointer;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -120,6 +138,7 @@
         <button id="endButton">Mettre fin à la partie</button>
         <div id="timerDisplay">45:00</div>
         <button id="addTimeButton">+1 Minute (Fragment Retrouvé)</button>
+        <button id="playAudioButton">Jouer la musique</button>
     </div>
     
     <div id="audioPlayer" style="display: none;">
@@ -145,6 +164,7 @@
         const endButton = document.getElementById('endButton');
         const audioPlayer = document.getElementById('audioPlayer');
         const songTitle = document.getElementById('songTitle');
+        const playAudioButton = document.getElementById('playAudioButton');
 
         const songTitles = [
             "Début de l'aventure",
@@ -158,7 +178,7 @@
         addTimeButton.addEventListener('click', addOneMinute);
         endButton.addEventListener('click', endGame);
 
-        // Créer les objets Howl pour chaque son
+        // Créer les objets Howl pour chaque son avec des options spécifiques pour iOS
         const audioFiles = ['song01.mp3', 'song02.mp3', 'song03.mp3', 'song04.mp3', 'song05.mp3'];
         audioFiles.forEach((file, index) => {
             sounds[index] = new Howl({
@@ -166,6 +186,10 @@
                 loop: true,
                 volume: 0,
                 preload: true,
+                html5: true,
+                onloaderror: function(id, error) {
+                    console.error('Erreur de chargement du son:', error);
+                }
             });
         });
 
@@ -206,7 +230,9 @@
             displayTime(remainingTime);
 
             calculateSongSegments();
-            playAllSongs();
+
+            playAudioButton.style.display = 'block';
+            playAudioButton.addEventListener('click', playAllSongs);
 
             initWaveSurfer();
             audioPlayer.style.display = 'flex';
@@ -275,8 +301,14 @@
         }
 
         function playAllSongs() {
-            sounds.forEach(sound => sound.play());
+            playAudioButton.style.display = 'none';
+            sounds.forEach(sound => {
+                sound.play();
+                sound.fade(0, 0, 1); // Commencer avec un volume de 0
+            });
             adjustVolumes();
+            initWaveSurfer();
+            audioPlayer.style.display = 'flex';
         }
 
         function adjustVolumes() {
@@ -284,8 +316,10 @@
                 if (index === currentSongIndex) {
                     sound.fade(sound.volume(), 1, 2000);
                     songTitle.textContent = songTitles[index];
-                    wavesurfer.load(audioFiles[index]);
-                    wavesurfer.play();
+                    if (wavesurfer) {
+                        wavesurfer.load(audioFiles[index]);
+                        wavesurfer.play();
+                    }
                 } else {
                     sound.fade(sound.volume(), 0, 2000);
                 }
@@ -294,8 +328,11 @@
 
         function stopAudio() {
             sounds.forEach(sound => sound.stop());
-            wavesurfer.stop();
+            if (wavesurfer) {
+                wavesurfer.stop();
+            }
             audioPlayer.style.display = 'none';
+            playAudioButton.style.display = 'none';
         }
 
         function endGame() {
