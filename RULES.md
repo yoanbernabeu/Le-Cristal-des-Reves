@@ -79,7 +79,7 @@ Chaque tour est une opportunité de progresser dans votre quête pour rassembler
      3. **Révélation des Cartes :**
         - Mélangez toutes les cartes choisies et exposez-les au centre de la table.
      4. **Attaque Cauchemardesque :**
-        - Si une ou plusieurs cartes "Attaque Cauchemardesque" sont révélées, autant de fragments du Cristal des Rêves sont ajoutés au plateau. La ronde de vision se termine immédiatement.
+        - Si une ou plusieurs cartes "Attaque Cauchemardesque" sont révélées, autant de fragments du Cristal des Rêves sont ajoutés au plateau. La ronde de vision se termine immédiatement. La carte "Attaque Cauchemardesque" est sortie du jeu jusqu'à la fin de la partie.
         - Si aucune carte "Attaque Cauchemardesque" n'est révélée, la ronde de vision se poursuit.
      5. **Discussion et Délibération :**
         - Tous les joueur·euse·s, à l'exception du/de la Guide, discutent ensemble pour tenter de déterminer quelle carte a été sélectionnée par le/la Guide.
