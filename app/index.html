@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Cristal des Rêves - Minuteur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js" integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         /* Styles inchangés */
         body {
@@ -104,12 +105,8 @@
         let remainingTime;
         let easierMode = false;
         let songSegments = [];
-        let currentSongIndex = -1; // Commence à -1 pour forcer le premier ajustement
-        let audioContext;
-        let audioBuffers = [];
-        let sourceNodes = [];
-        let gainNodes = [];
-        const fadeDuration = 2; // Durée du fondu en secondes
+        let currentSongIndex = -1;
+        let sounds = [];
 
         const durationInput = document.getElementById('duration');
         const startButton = document.getElementById('startButton');
@@ -121,6 +118,17 @@
         startButton.addEventListener('click', startTimer);
         addTimeButton.addEventListener('click', addOneMinute);
         endButton.addEventListener('click', endGame);
+
+        // Créer les objets Howl pour chaque son
+        const audioFiles = ['song01.mp3', 'song02.mp3', 'song03.mp3', 'song04.mp3', 'song05.mp3'];
+        audioFiles.forEach((file, index) => {
+            sounds[index] = new Howl({
+                src: [file],
+                loop: true,
+                volume: 0,
+                preload: true,
+            });
+        });
 
         function startTimer() {
             totalTime = parseInt(durationInput.value) * 60;
@@ -143,52 +151,22 @@
             remainingTime = totalTime;
             displayTime(remainingTime);
 
-            // Initialiser le contexte audio
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
+            calculateSongSegments();
+            playAllSongs();
 
-            // Charger les fichiers audio
-            loadAudioFiles().then(() => {
-                // Diviser le temps total en 5 segments pour les chansons
-                calculateSongSegments();
-
-                // Démarrer toutes les chansons avec volume 0
-                playAllSongs();
-
-                // Démarrer le minuteur
-                countdown = setInterval(() => {
-                    remainingTime--;
-                    if (remainingTime <= 0) {
-                        clearInterval(countdown);
-                        timerDisplay.textContent = 'Temps écoulé!';
-                        stopAudio();
-                        alert('Le temps est écoulé. La partie est terminée.');
-                        resetTimer();
-                    } else {
-                        displayTime(remainingTime);
-                        checkForSongChange();
-                    }
-                }, 1000);
-            }).catch(error => {
-                console.error('Erreur lors du chargement des fichiers audio :', error);
-                alert('Une erreur est survenue lors du chargement des fichiers audio.');
-            });
-        }
-
-        function loadAudioFiles() {
-            const audioFiles = ['song01.mp3', 'song02.mp3', 'song03.mp3', 'song04.mp3', 'song05.mp3'];
-            const promises = audioFiles.map((file, index) => {
-                return fetch(file)
-                    .then(response => response.arrayBuffer())
-                    .then(arrayBuffer => new Promise((resolve, reject) => {
-                        audioContext.decodeAudioData(arrayBuffer, (audioBuffer) => {
-                            audioBuffers[index] = audioBuffer;
-                            resolve();
-                        }, reject);
-                    }));
-            });
-            return Promise.all(promises);
+            countdown = setInterval(() => {
+                remainingTime--;
+                if (remainingTime <= 0) {
+                    clearInterval(countdown);
+                    timerDisplay.textContent = 'Temps écoulé!';
+                    stopAudio();
+                    alert('Le temps est écoulé. La partie est terminée.');
+                    resetTimer();
+                } else {
+                    displayTime(remainingTime);
+                    checkForSongChange();
+                }
+            }, 1000);
         }
 
         function displayTime(seconds) {
@@ -199,7 +177,7 @@
 
         function addOneMinute() {
             remainingTime += 60;
-            totalTime += 60; // Mettre à jour le temps total pour le calcul des segments
+            totalTime += 60;
             displayTime(remainingTime);
             calculateSongSegments();
         }
@@ -239,60 +217,22 @@
         }
 
         function playAllSongs() {
-            // Créer les sources et les gainNodes pour chaque piste
-            for (let i = 0; i < audioBuffers.length; i++) {
-                const sourceNode = audioContext.createBufferSource();
-                sourceNode.buffer = audioBuffers[i];
-                sourceNode.loop = true;
-
-                const gainNode = audioContext.createGain();
-                gainNode.gain.value = 0; // Commence à volume 0
-
-                sourceNode.connect(gainNode).connect(audioContext.destination);
-                sourceNode.start(0);
-
-                sourceNodes[i] = sourceNode;
-                gainNodes[i] = gainNode;
-            }
-
-            // Régler le volume initial
-            adjustVolumes(true); // Premier ajustement sans fondu
+            sounds.forEach(sound => sound.play());
+            adjustVolumes();
         }
 
-        function adjustVolumes(initial = false) {
-            const currentTime = audioContext.currentTime;
-            for (let i = 0; i < gainNodes.length; i++) {
-                if (i === currentSongIndex) {
-                    // Augmenter le volume de la piste actuelle
-                    gainNodes[i].gain.cancelScheduledValues(currentTime);
-                    if (initial) {
-                        gainNodes[i].gain.setValueAtTime(1, currentTime);
-                    } else {
-                        gainNodes[i].gain.setValueAtTime(gainNodes[i].gain.value, currentTime);
-                        gainNodes[i].gain.linearRampToValueAtTime(1, currentTime + fadeDuration);
-                    }
+        function adjustVolumes() {
+            sounds.forEach((sound, index) => {
+                if (index === currentSongIndex) {
+                    sound.fade(sound.volume(), 1, 2000);
                 } else {
-                    // Diminuer le volume des autres pistes
-                    gainNodes[i].gain.cancelScheduledValues(currentTime);
-                    if (initial) {
-                        gainNodes[i].gain.setValueAtTime(0, currentTime);
-                    } else {
-                        gainNodes[i].gain.setValueAtTime(gainNodes[i].gain.value, currentTime);
-                        gainNodes[i].gain.linearRampToValueAtTime(0, currentTime + fadeDuration);
-                    }
+                    sound.fade(sound.volume(), 0, 2000);
                 }
-            }
+            });
         }
 
         function stopAudio() {
-            if (sourceNodes.length > 0) {
-                sourceNodes.forEach((sourceNode) => {
-                    sourceNode.stop(0);
-                    sourceNode.disconnect();
-                });
-                sourceNodes = [];
-                gainNodes = [];
-            }
+            sounds.forEach(sound => sound.stop());
         }
 
         function endGame() {
