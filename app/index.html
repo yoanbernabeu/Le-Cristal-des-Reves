@@ -5,6 +5,7 @@
     <title>Le Cristal des Rêves - Minuteur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js" integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.min.js"></script>
     <style>
         /* Styles inchangés */
         body {
@@ -81,6 +82,27 @@
                 font-size: 2.5em;
             }
         }
+        
+        #audioPlayer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #0f3460;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #songTitle {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        #waveform {
+            width: 100%;
+            height: 50px;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +121,12 @@
         <div id="timerDisplay">45:00</div>
         <button id="addTimeButton">+1 Minute (Fragment Retrouvé)</button>
     </div>
+    
+    <div id="audioPlayer" style="display: none;">
+        <div id="songTitle">Titre de la chanson</div>
+        <div id="waveform"></div>
+    </div>
+
     <script>
         let countdown;
         let totalTime;
@@ -107,6 +135,7 @@
         let songSegments = [];
         let currentSongIndex = -1;
         let sounds = [];
+        let wavesurfer;
 
         const durationInput = document.getElementById('duration');
         const startButton = document.getElementById('startButton');
@@ -114,6 +143,16 @@
         const addTimeButton = document.getElementById('addTimeButton');
         const easierModeCheckbox = document.getElementById('easierMode');
         const endButton = document.getElementById('endButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const songTitle = document.getElementById('songTitle');
+
+        const songTitles = [
+            "Début de l'aventure",
+            "La quête commence",
+            "Le danger approche",
+            "L'ultime défi",
+            "La victoire est proche"
+        ];
 
         startButton.addEventListener('click', startTimer);
         addTimeButton.addEventListener('click', addOneMinute);
@@ -167,6 +206,8 @@
                     checkForSongChange();
                 }
             }, 1000);
+            audioPlayer.style.display = 'flex';
+            initWaveSurfer();
         }
 
         function displayTime(seconds) {
@@ -189,6 +230,7 @@
             addTimeButton.style.display = 'none';
             endButton.style.display = 'none';
             stopAudio();
+            audioPlayer.style.display = 'none';
         }
 
         function calculateSongSegments() {
@@ -225,6 +267,9 @@
             sounds.forEach((sound, index) => {
                 if (index === currentSongIndex) {
                     sound.fade(sound.volume(), 1, 2000);
+                    songTitle.textContent = songTitles[index];
+                    wavesurfer.load(audioFiles[index]);
+                    wavesurfer.play();
                 } else {
                     sound.fade(sound.volume(), 0, 2000);
                 }
@@ -233,6 +278,8 @@
 
         function stopAudio() {
             sounds.forEach(sound => sound.stop());
+            wavesurfer.stop();
+            audioPlayer.style.display = 'none';
         }
 
         function endGame() {
@@ -241,6 +288,21 @@
             stopAudio();
             alert('La partie a été terminée.');
             resetTimer();
+        }
+
+        // Initialiser WaveSurfer
+        function initWaveSurfer() {
+            wavesurfer = WaveSurfer.create({
+                container: '#waveform',
+                waveColor: '#4a9eff',
+                progressColor: '#1a73e8',
+                cursorColor: '#4a9eff',
+                barWidth: 2,
+                barRadius: 3,
+                cursorWidth: 1,
+                height: 50,
+                barGap: 3
+            });
         }
     </script>
 </body>
