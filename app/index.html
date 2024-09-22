@@ -106,7 +106,7 @@
         let songSegments = [];
         let currentSongIndex = 0;
         let audioContext;
-        let audioElement;
+        let audioBuffers = [];
         let audioSource;
 
         const durationInput = document.getElementById('duration');
@@ -119,6 +119,16 @@
         startButton.addEventListener('click', startTimer);
         addTimeButton.addEventListener('click', addOneMinute);
         endButton.addEventListener('click', endGame);
+
+        async function loadAudioFiles() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            for (let i = 1; i <= 5; i++) {
+                const response = await fetch(`song${('0' + i).slice(-2)}.mp3`);
+                const arrayBuffer = await response.arrayBuffer();
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                audioBuffers.push(audioBuffer);
+            }
+        }
 
         function startTimer() {
             totalTime = parseInt(durationInput.value) * 60;
@@ -144,12 +154,12 @@
             // Diviser le temps total en 5 segments pour les chansons
             calculateSongSegments();
 
-            // Initialiser l'AudioContext
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-            // Démarrer la première chanson
-            currentSongIndex = 0;
-            playCurrentSong();
+            // Charger les fichiers audio
+            loadAudioFiles().then(() => {
+                // Démarrer la première chanson
+                currentSongIndex = 0;
+                playCurrentSong();
+            });
 
             countdown = setInterval(() => {
                 remainingTime--;
@@ -204,28 +214,20 @@
         }
 
         function playCurrentSong() {
-            if (audioElement) {
-                audioElement.pause();
-                audioElement.currentTime = 0;
+            if (audioSource) {
+                audioSource.stop();
             }
-            const songNumber = ('0' + (currentSongIndex + 1)).slice(-2);
-            audioElement = new Audio(`song${songNumber}.mp3`);
-            audioElement.loop = true;
-
-            // Utiliser l'AudioContext pour jouer l'audio
-            audioSource = audioContext.createMediaElementSource(audioElement);
+            audioSource = audioContext.createBufferSource();
+            audioSource.buffer = audioBuffers[currentSongIndex];
             audioSource.connect(audioContext.destination);
-
-            audioElement.play().catch(error => {
-                console.error('Erreur lors de la lecture de la piste audio :', error);
-            });
+            audioSource.loop = true;
+            audioSource.start();
         }
 
         function stopAudio() {
-            if (audioElement) {
-                audioElement.pause();
-                audioElement.currentTime = 0;
-                audioElement = null;
+            if (audioSource) {
+                audioSource.stop();
+                audioSource = null;
             }
         }
 
