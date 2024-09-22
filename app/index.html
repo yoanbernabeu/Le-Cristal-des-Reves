@@ -104,12 +104,12 @@
         let remainingTime;
         let easierMode = false;
         let songSegments = [];
-        let currentSongIndex = -1;
+        let currentSongIndex = -1; // Commence à -1 pour forcer le premier ajustement
         let audioContext;
         let audioBuffers = [];
         let sourceNodes = [];
         let gainNodes = [];
-        const fadeDuration = 2; 
+        const fadeDuration = 2; // Durée du fondu en secondes
 
         const durationInput = document.getElementById('duration');
         const startButton = document.getElementById('startButton');
@@ -118,23 +118,9 @@
         const easierModeCheckbox = document.getElementById('easierMode');
         const endButton = document.getElementById('endButton');
 
-        startButton.addEventListener('click', () => {
-            // Initialiser le contexte audio lors du premier clic de l'utilisateur
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            startTimer();
-        });
-
-        endButton.addEventListener('click', () => {
-            // Vérifier si le contexte audio est initialisé avant de l'utiliser
-            if (audioContext) {
-                // Arrêter le contexte audio si nécessaire
-                audioContext.close();
-                audioContext = null;
-            }
-            endGame();
-        });
+        startButton.addEventListener('click', startTimer);
+        addTimeButton.addEventListener('click', addOneMinute);
+        endButton.addEventListener('click', endGame);
 
         function startTimer() {
             totalTime = parseInt(durationInput.value) * 60;
@@ -157,9 +143,20 @@
             remainingTime = totalTime;
             displayTime(remainingTime);
 
+            // Initialiser le contexte audio
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Charger les fichiers audio
             loadAudioFiles().then(() => {
+                // Diviser le temps total en 5 segments pour les chansons
                 calculateSongSegments();
+
+                // Démarrer toutes les chansons avec volume 0
                 playAllSongs();
+
+                // Démarrer le minuteur
                 countdown = setInterval(() => {
                     remainingTime--;
                     if (remainingTime <= 0) {
@@ -202,7 +199,7 @@
 
         function addOneMinute() {
             remainingTime += 60;
-            totalTime += 60;
+            totalTime += 60; // Mettre à jour le temps total pour le calcul des segments
             displayTime(remainingTime);
             calculateSongSegments();
         }
@@ -242,13 +239,14 @@
         }
 
         function playAllSongs() {
+            // Créer les sources et les gainNodes pour chaque piste
             for (let i = 0; i < audioBuffers.length; i++) {
                 const sourceNode = audioContext.createBufferSource();
                 sourceNode.buffer = audioBuffers[i];
                 sourceNode.loop = true;
 
                 const gainNode = audioContext.createGain();
-                gainNode.gain.value = 0; 
+                gainNode.gain.value = 0; // Commence à volume 0
 
                 sourceNode.connect(gainNode).connect(audioContext.destination);
                 sourceNode.start(0);
@@ -257,13 +255,15 @@
                 gainNodes[i] = gainNode;
             }
 
-            adjustVolumes(true);
+            // Régler le volume initial
+            adjustVolumes(true); // Premier ajustement sans fondu
         }
 
         function adjustVolumes(initial = false) {
             const currentTime = audioContext.currentTime;
             for (let i = 0; i < gainNodes.length; i++) {
                 if (i === currentSongIndex) {
+                    // Augmenter le volume de la piste actuelle
                     gainNodes[i].gain.cancelScheduledValues(currentTime);
                     if (initial) {
                         gainNodes[i].gain.setValueAtTime(1, currentTime);
@@ -272,6 +272,7 @@
                         gainNodes[i].gain.linearRampToValueAtTime(1, currentTime + fadeDuration);
                     }
                 } else {
+                    // Diminuer le volume des autres pistes
                     gainNodes[i].gain.cancelScheduledValues(currentTime);
                     if (initial) {
                         gainNodes[i].gain.setValueAtTime(0, currentTime);
