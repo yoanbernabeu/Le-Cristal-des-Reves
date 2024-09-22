@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Cristal des Rêves - Minuteur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Styles inchangés */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #eaeaea;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #e94560;
+        }       
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2em;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .options {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            font-size: 1em;
+        }
+        .options input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        #startButton, #addTimeButton, #endButton {
+            background-color: #0f3460;
+            color: #eaeaea;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+        #startButton:hover, #addTimeButton:hover, #endButton:hover {
+            background-color: #16213e;
+        }
+        #addTimeButton, #endButton {
+            display: none;
+        }
+        #timerDisplay {
+            font-size: 3em;
+            margin-top: 30px;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            label, input[type="number"], #startButton, #addTimeButton {
+                font-size: 1em;
+            }
+            #timerDisplay {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Le Cristal des Rêves - Minuteur</h1>
+        <label for="duration">Durée de la partie (en minutes) :</label>
+        <input type="number" id="duration" min="1" value="45">
+        <div class="options">
+            <label>
+                <input type="checkbox" id="easierMode">
+                Activer l'option +1 minute par fragment retrouvé
+            </label>
+        </div>
+        <button id="startButton">Démarrer le Minuteur</button>
+        <button id="endButton">Mettre fin à la partie</button>
+        <div id="timerDisplay">45:00</div>
+        <button id="addTimeButton">+1 Minute (Fragment Retrouvé)</button>
+    </div>
+    <script>
+        let countdown;
+        let totalTime;
+        let remainingTime;
+        let easierMode = false;
+        let songSegments = [];
+        let currentSongIndex = 0;
+        let audioElement = null;
+
+        const durationInput = document.getElementById('duration');
+        const startButton = document.getElementById('startButton');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const addTimeButton = document.getElementById('addTimeButton');
+        const easierModeCheckbox = document.getElementById('easierMode');
+        const endButton = document.getElementById('endButton');
+
+        startButton.addEventListener('click', startTimer);
+        addTimeButton.addEventListener('click', addOneMinute);
+        endButton.addEventListener('click', endGame);
+
+        function startTimer() {
+            totalTime = parseInt(durationInput.value) * 60;
+            if (isNaN(totalTime) || totalTime <= 0) {
+                alert('Veuillez entrer une durée valide.');
+                return;
+            }
+
+            easierMode = easierModeCheckbox.checked;
+
+            if (easierMode) {
+                addTimeButton.style.display = 'block';
+            }
+            endButton.style.display = 'block';
+
+            startButton.disabled = true;
+            durationInput.disabled = true;
+            easierModeCheckbox.disabled = true;
+
+            remainingTime = totalTime;
+            displayTime(remainingTime);
+
+            // Diviser le temps total en 5 segments pour les chansons
+            calculateSongSegments();
+
+            // Démarrer la première chanson
+            currentSongIndex = 0;
+            playCurrentSong();
+
+            countdown = setInterval(() => {
+                remainingTime--;
+                if (remainingTime <= 0) {
+                    clearInterval(countdown);
+                    timerDisplay.textContent = 'Temps écoulé!';
+                    stopAudio();
+                    alert('Le temps est écoulé. La partie est terminée.');
+                    resetTimer();
+                } else {
+                    displayTime(remainingTime);
+                    checkForSongChange();
+                }
+            }, 1000);
+        }
+
+        function displayTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerDisplay.textContent = `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function addOneMinute() {
+            remainingTime += 60;
+            totalTime += 60; // Mettre à jour le temps total pour le calcul des segments
+            displayTime(remainingTime);
+            calculateSongSegments();
+        }
+
+        function resetTimer() {
+            startButton.disabled = false;
+            durationInput.disabled = false;
+            easierModeCheckbox.disabled = false;
+            addTimeButton.style.display = 'none';
+            endButton.style.display = 'none';
+            stopAudio();
+        }
+
+        function calculateSongSegments() {
+            const segmentDuration = totalTime / 5;
+            songSegments = [];
+            for (let i = 0; i < 5; i++) {
+                songSegments.push(totalTime - segmentDuration * i);
+            }
+        }
+
+        function checkForSongChange() {
+            if (currentSongIndex < 4 && remainingTime <= songSegments[currentSongIndex + 1]) {
+                currentSongIndex++;
+                playCurrentSong();
+            }
+        }
+
+        function playCurrentSong() {
+            if (audioElement) {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+            }
+            const songNumber = ('0' + (currentSongIndex + 1)).slice(-2);
+            audioElement = new Audio(`song${songNumber}.mp3`);
+            audioElement.loop = true;
+            audioElement.play().catch(error => {
+                console.error('Erreur lors de la lecture de la piste audio :', error);
+            });
+        }
+
+        function stopAudio() {
+            if (audioElement) {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+                audioElement = null;
+            }
+        }
+
+        function endGame() {
+            clearInterval(countdown);
+            timerDisplay.textContent = 'Partie terminée!';
+            stopAudio();
+            alert('La partie a été terminée.');
+            resetTimer();
+        }
+    </script>
+</body>
+</html>
