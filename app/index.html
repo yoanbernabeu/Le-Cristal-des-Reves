@@ -13,6 +13,8 @@
             text-align: center;
             padding: 20px;
             margin: 0;
+            position: relative;
+            overflow: hidden;
         }
         h1 {
             color: #e94560;
@@ -20,6 +22,8 @@
         .container {
             max-width: 500px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         label {
             display: block;
@@ -101,7 +105,9 @@
         let easierMode = false;
         let songSegments = [];
         let currentSongIndex = 0;
-        let audioElement = null;
+        let audioContext;
+        let audioElement;
+        let audioSource;
 
         const durationInput = document.getElementById('duration');
         const startButton = document.getElementById('startButton');
@@ -137,6 +143,9 @@
 
             // Diviser le temps total en 5 segments pour les chansons
             calculateSongSegments();
+
+            // Initialiser l'AudioContext
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
             // Démarrer la première chanson
             currentSongIndex = 0;
@@ -202,6 +211,11 @@
             const songNumber = ('0' + (currentSongIndex + 1)).slice(-2);
             audioElement = new Audio(`song${songNumber}.mp3`);
             audioElement.loop = true;
+
+            // Utiliser l'AudioContext pour jouer l'audio
+            audioSource = audioContext.createMediaElementSource(audioElement);
+            audioSource.connect(audioContext.destination);
+
             audioElement.play().catch(error => {
                 console.error('Erreur lors de la lecture de la piste audio :', error);
             });
