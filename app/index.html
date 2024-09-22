@@ -169,6 +169,21 @@
             });
         });
 
+        // Initialiser WaveSurfer
+        function initWaveSurfer() {
+            wavesurfer = WaveSurfer.create({
+                container: '#waveform',
+                waveColor: '#4a9eff',
+                progressColor: '#1a73e8',
+                cursorColor: '#4a9eff',
+                barWidth: 2,
+                barRadius: 3,
+                cursorWidth: 1,
+                height: 50,
+                barGap: 3
+            });
+        }
+
         function startTimer() {
             totalTime = parseInt(durationInput.value) * 60;
             if (isNaN(totalTime) || totalTime <= 0) {
@@ -193,6 +208,9 @@
             calculateSongSegments();
             playAllSongs();
 
+            initWaveSurfer();
+            audioPlayer.style.display = 'flex';
+
             countdown = setInterval(() => {
                 remainingTime--;
                 if (remainingTime <= 0) {
@@ -206,8 +224,6 @@
                     checkForSongChange();
                 }
             }, 1000);
-            audioPlayer.style.display = 'flex';
-            initWaveSurfer();
         }
 
         function displayTime(seconds) {
@@ -288,21 +304,6 @@
             stopAudio();
             alert('La partie a été terminée.');
             resetTimer();
-        }
-
-        // Initialiser WaveSurfer
-        function initWaveSurfer() {
-            wavesurfer = WaveSurfer.create({
-                container: '#waveform',
-                waveColor: '#4a9eff',
-                progressColor: '#1a73e8',
-                cursorColor: '#4a9eff',
-                barWidth: 2,
-                barRadius: 3,
-                cursorWidth: 1,
-                height: 50,
-                barGap: 3
-            });
         }
     </script>
 </body>
