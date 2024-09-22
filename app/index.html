@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Le Cristal des Rêves - Minuteur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Vos styles CSS ici -->
     <style>
         /* Styles inchangés */
         body {
@@ -18,7 +19,7 @@
         }
         h1 {
             color: #e94560;
-        }       
+        }
         .container {
             max-width: 500px;
             margin: 0 auto;
@@ -98,11 +99,6 @@
         <div id="timerDisplay">45:00</div>
         <button id="addTimeButton">+1 Minute (Fragment Retrouvé)</button>
     </div>
-    <audio id="audio1" src="song01.mp3"></audio>
-    <audio id="audio2" src="song02.mp3"></audio>
-    <audio id="audio3" src="song03.mp3"></audio>
-    <audio id="audio4" src="song04.mp3"></audio>
-    <audio id="audio5" src="song05.mp3"></audio>
     <script>
         let countdown;
         let totalTime;
@@ -110,13 +106,9 @@
         let easierMode = false;
         let songSegments = [];
         let currentSongIndex = 0;
-        const audioElements = [
-            document.getElementById('audio1'),
-            document.getElementById('audio2'),
-            document.getElementById('audio3'),
-            document.getElementById('audio4'),
-            document.getElementById('audio5')
-        ];
+        let audioContext;
+        let audioBuffers = [];
+        let sourceNode = null;
 
         const durationInput = document.getElementById('duration');
         const startButton = document.getElementById('startButton');
@@ -150,26 +142,53 @@
             remainingTime = totalTime;
             displayTime(remainingTime);
 
-            // Diviser le temps total en 5 segments pour les chansons
-            calculateSongSegments();
+            // Initialiser le contexte audio
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
 
-            // Démarrer la première chanson
-            currentSongIndex = 0;
-            playCurrentSong();
+            // Charger les fichiers audio
+            loadAudioFiles().then(() => {
+                // Diviser le temps total en 5 segments pour les chansons
+                calculateSongSegments();
 
-            countdown = setInterval(() => {
-                remainingTime--;
-                if (remainingTime <= 0) {
-                    clearInterval(countdown);
-                    timerDisplay.textContent = 'Temps écoulé!';
-                    stopAudio();
-                    alert('Le temps est écoulé. La partie est terminée.');
-                    resetTimer();
-                } else {
-                    displayTime(remainingTime);
-                    checkForSongChange();
-                }
-            }, 1000);
+                // Démarrer la première chanson
+                currentSongIndex = 0;
+                playCurrentSong();
+
+                // Démarrer le minuteur
+                countdown = setInterval(() => {
+                    remainingTime--;
+                    if (remainingTime <= 0) {
+                        clearInterval(countdown);
+                        timerDisplay.textContent = 'Temps écoulé!';
+                        stopAudio();
+                        alert('Le temps est écoulé. La partie est terminée.');
+                        resetTimer();
+                    } else {
+                        displayTime(remainingTime);
+                        checkForSongChange();
+                    }
+                }, 1000);
+            }).catch(error => {
+                console.error('Erreur lors du chargement des fichiers audio :', error);
+                alert('Une erreur est survenue lors du chargement des fichiers audio.');
+            });
+        }
+
+        function loadAudioFiles() {
+            const audioFiles = ['song01.mp3', 'song02.mp3', 'song03.mp3', 'song04.mp3', 'song05.mp3'];
+            const promises = audioFiles.map((file, index) => {
+                return fetch(file)
+                    .then(response => response.arrayBuffer())
+                    .then(arrayBuffer => new Promise((resolve, reject) => {
+                        audioContext.decodeAudioData(arrayBuffer, (audioBuffer) => {
+                            audioBuffers[index] = audioBuffer;
+                            resolve();
+                        }, reject);
+                    }));
+            });
+            return Promise.all(promises);
         }
 
         function displayTime(seconds) {
@@ -211,18 +230,19 @@
 
         function playCurrentSong() {
             stopAudio();
-            const audioElement = audioElements[currentSongIndex];
-            audioElement.loop = true;
-            audioElement.play().catch(error => {
-                console.error('Erreur lors de la lecture de la piste audio :', error);
-            });
+            sourceNode = audioContext.createBufferSource();
+            sourceNode.buffer = audioBuffers[currentSongIndex];
+            sourceNode.loop = true;
+            sourceNode.connect(audioContext.destination);
+            sourceNode.start(0);
         }
 
         function stopAudio() {
-            audioElements.forEach(audio => {
-                audio.pause();
-                audio.currentTime = 0;
-            });
+            if (sourceNode) {
+                sourceNode.stop(0);
+                sourceNode.disconnect();
+                sourceNode = null;
+            }
         }
 
         function endGame() {
@@ -232,16 +252,6 @@
             alert('La partie a été terminée.');
             resetTimer();
         }
-
-        // Ajout d'événements pour gérer la fin de la lecture de chaque piste audio
-        audioElements.forEach((audio, index) => {
-            audio.addEventListener('ended', () => {
-                if (index < audioElements.length - 1) {
-                    currentSongIndex = index + 1;
-                    playCurrentSong();
-                }
-            });
-        });
     </script>
 </body>
 </html>
