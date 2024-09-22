@@ -232,6 +232,16 @@
             alert('La partie a été terminée.');
             resetTimer();
         }
+
+        // Ajout d'événements pour gérer la fin de la lecture de chaque piste audio
+        audioElements.forEach((audio, index) => {
+            audio.addEventListener('ended', () => {
+                if (index < audioElements.length - 1) {
+                    currentSongIndex = index + 1;
+                    playCurrentSong();
+                }
+            });
+        });
     </script>
 </body>
 </html>
